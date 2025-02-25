@@ -14,8 +14,8 @@
             android:id="@+id/action_fragmentLogin_to_fragmentRegister"
             app:destination="@id/fragmentRegister" />
         <action
-            android:id="@+id/action_fragmentLogin_to_fragmentAfterLogin"
-            app:destination="@id/fragmentAfterLogin" />
+            android:id="@+id/action_fragmentLogin_to_homePageFragment"
+            app:destination="@id/homePageFragment" />
     </fragment>
     <fragment
         android:id="@+id/fragmentRegister"
@@ -39,4 +39,29 @@
         android:id="@+id/detailedExerciseFragment"
         android:name="com.example.trainhero.fragments.DetailedExerciseFragment"
         android:label="DetailedExerciseFragment" />
+    <fragment
+        android:id="@+id/homePageFragment"
+        android:name="com.example.trainhero.fragments.HomePageFragment"
+        android:label="fragment_home_page"
+        tools:layout="@layout/fragment_home_page" >
+        <action
+            android:id="@+id/action_homePageFragment_to_fragmentAfterLogin"
+            app:destination="@id/fragmentAfterLogin" />
+        <action
+            android:id="@+id/action_homePageFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+        <action
+            android:id="@+id/action_homePageFragment_to_gymsNearByFragment"
+            app:destination="@id/gymsNearByFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.trainhero.fragments.FavoritesFragment"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites" />
+    <fragment
+        android:id="@+id/gymsNearByFragment"
+        android:name="com.example.trainhero.fragments.GymsNearByFragment"
+        android:label="fragment_gyms_near_by"
+        tools:layout="@layout/fragment_gyms_near_by" />
 </navigation>

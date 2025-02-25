@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(MainActivity.this, "login OK", Toast.LENGTH_LONG).show();
-                            Navigation.findNavController(view).navigate(R.id.action_fragmentLogin_to_fragmentAfterLogin);
+                            Navigation.findNavController(view).navigate(R.id.action_fragmentLogin_to_homePageFragment);
 
                         } else {
                             // If sign in fails, display a message to the user.
