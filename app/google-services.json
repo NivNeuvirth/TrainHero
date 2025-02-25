@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "707793311454",
+    "project_id": "trainhero-426bc",
+    "storage_bucket": "trainhero-426bc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:707793311454:android:f40f566d91143964d8d44f",
+        "android_client_info": {
+          "package_name": "com.example.trainhero"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLplDttXL7pHYMAdom6MouzgGJUr9gWmo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
