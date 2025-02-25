@@ -1,5 +1,7 @@
 package com.example.trainhero;
 
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 //import com.bumptech.glide.Glide;
@@ -33,6 +36,8 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
         TextView exerciseEquipment;
         TextView exerciseBodyPart;
         ImageView exerciseGif;
+        TextView exerciseSecondaryMuscles;
+        TextView exerciseInstructions;
 
         public ExerciseViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -41,6 +46,8 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
             exerciseEquipment = itemView.findViewById(R.id.exe_equipment);
             exerciseBodyPart = itemView.findViewById(R.id.exe_body_part);
             exerciseGif = itemView.findViewById(R.id.exe_image);
+            exerciseSecondaryMuscles = itemView.findViewById(R.id.exe_secondary_muscles);
+            exerciseInstructions = itemView.findViewById(R.id.exe_instructions);
         }
     }
 
@@ -66,7 +73,12 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
 
         // Handle clicking on the exercise (if needed)
         holder.itemView.setOnClickListener(v -> {
-            Toast.makeText(v.getContext(), "Clicked on: " + exercise.getName(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(v.getContext(), "Clicked on: " + exercise.getName(), Toast.LENGTH_SHORT).show();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("exercise", exercise);
+
+            // Navigate to the target fragment using the NavController
+            Navigation.findNavController(v).navigate(R.id.action_fragmentAfterLogin_to_detailedExerciseFragment, bundle);
         });
     }
 
