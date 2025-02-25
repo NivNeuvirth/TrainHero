@@ -13,6 +13,7 @@ public class Exercise implements Serializable {
     private String target;
     private List<String> secondaryMuscles;
     private List<String> instructions;
+    private boolean favorite;
 
     public Exercise(String id, String name, String bodyPart, String equipment, String gifUrl, String target, List<String> secondaryMuscles, List<String> instructions) {
         this.id = id;
@@ -88,4 +89,8 @@ public class Exercise implements Serializable {
     public void setInstructions(List<String> instructions) {
         this.instructions = instructions;
     }
+
+    public boolean isFavorite() {return favorite;}
+
+    public void setFavorite(boolean favorite) {this.favorite = favorite;}
 }
