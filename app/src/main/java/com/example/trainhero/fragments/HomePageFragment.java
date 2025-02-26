@@ -5,18 +5,29 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.trainhero.R;
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Calendar;
 
 public class HomePageFragment extends Fragment {
+
+    private FirebaseAuth auth;
 
     public HomePageFragment() {
         // Required empty public constructor
     }
+
     public static HomePageFragment newInstance(String param1, String param2) {
         return new HomePageFragment();
     }
@@ -31,7 +42,41 @@ public class HomePageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view =  inflater.inflate(R.layout.fragment_home_page, container, false);
+        View view = inflater.inflate(R.layout.fragment_home_page, container, false);
+
+        // Get the current user from Firebase
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String userId = user.getUid();
+            DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
+            // Fetch the name from Firebase Realtime Database
+            database.child("users").child(userId).child("name").get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            String userName = task.getResult().getValue(String.class);
+                            if (userName == null || userName.isEmpty()) {
+                                userName = "User";  // Default if name is not found
+                            }
+
+                            // Get the current hour for greeting
+                            int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+                            String timeOfDayGreeting;
+
+                            if (currentHour >= 5 && currentHour < 12) {
+                                timeOfDayGreeting = "Good Morning";
+                            } else if (currentHour >= 12 && currentHour < 17) {
+                                timeOfDayGreeting = "Good Afternoon";
+                            } else {
+                                timeOfDayGreeting = "Good Night";
+                            }
+
+                            // Set the greeting message
+                            TextView greetingTextView = view.findViewById(R.id.greetingTextView);
+                            greetingTextView.setText(timeOfDayGreeting + ", " + userName + "!");
+                        }
+                    });
+        }
 
         MaterialCardView exploreCard = view.findViewById(R.id.exploreCard);
         exploreCard.setOnClickListener(v -> {

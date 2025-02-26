@@ -66,43 +66,6 @@ public class ExploreFragment extends Fragment implements ExerciseAdapter.OnFavor
         return view;
     }
 
-//    private void fetchSingleExercise() {
-//        DataServices dataServices = new DataServices();
-//        Exercise exercise = dataServices.getExerciseById("0012"); // Example ID for a single exercise
-//
-//        if (exercise != null) {
-//            ArrayList<Exercise> singleExerciseList = new ArrayList<>();
-//            singleExerciseList.add(exercise);
-//
-//            // Check if the exercise is already a favorite
-//            FirebaseDatabase database = FirebaseDatabase.getInstance();
-//            DatabaseReference favoritesRef = database.getReference("favorites");
-//
-//            favoritesRef.child(exercise.getId()).get().addOnCompleteListener(task -> {
-//                if (task.isSuccessful()) {
-//                    if (task.getResult().exists()) {
-//                        // Exercise is a favorite, set filled heart
-//                        exercise.setFavorite(true);
-//                    } else {
-//                        // Exercise is not a favorite, set empty heart
-//                        exercise.setFavorite(false);
-//                    }
-//
-//                    // Now set the adapter with updated favorite state
-//                    exerciseAdapter = new ExerciseAdapter(singleExerciseList, this, false);
-//                    recyclerView.setAdapter(exerciseAdapter);
-//                } else {
-//                    Toast.makeText(getContext(), "Failed to check favorites", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//
-//            exerciseAdapter = new ExerciseAdapter(singleExerciseList, this, false);
-//            recyclerView.setAdapter(exerciseAdapter);
-//        } else {
-//            Toast.makeText(getContext(), "Exercise not found", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
     private void fetchRandomExercises() {
         DataServices dataServices = new DataServices();
         ArrayList<Exercise> exerciseList = dataServices.getAllExercises();

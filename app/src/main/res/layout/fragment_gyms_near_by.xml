@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:padding="10dp"
     android:fitsSystemWindows="true"
-    tools:context=".fragments.GymsNearByFragment">
+    tools:context=".fragments.GymsNearByFragment"
+    android:background="@color/light_beige">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
@@ -28,7 +29,8 @@
                 android:layout_height="wrap_content"
                 android:text="Gyms NearBy"
                 android:fontFamily="@font/ausa"
-                android:textSize="24sp"
+                android:textColor="@color/soft_gray"
+                android:textSize="44sp"
                 android:textStyle="bold"
                 android:layout_gravity="center" />
         </androidx.appcompat.widget.Toolbar>

@@ -6,16 +6,19 @@
     android:orientation="vertical"
     tools:context=".fragments.FragmentRegister"
     android:padding="16dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/light_beige">
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Registration Page"
+        android:text="Join TrainHero"
+        android:fontFamily="@font/ausa"
         android:gravity="center"
         android:layout_marginBottom="20dp"
-        android:textSize="32sp"/>
+        android:textSize="44sp"
+        android:textStyle="bold"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -85,5 +88,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Register"
-        android:layout_marginTop="15dp"/>
+        android:backgroundTint="@color/Terracotta_red"
+        android:layout_marginTop="30dp"/>
 </LinearLayout>

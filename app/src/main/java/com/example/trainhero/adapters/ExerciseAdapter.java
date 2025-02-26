@@ -8,11 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
-
-//import com.bumptech.glide.Glide;
 import com.bumptech.glide.Glide;
 import com.example.trainhero.R;
 import com.example.trainhero.models.Exercise;
@@ -22,6 +19,7 @@ import java.util.ArrayList;
 public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolder> {
 
     private ArrayList<Exercise> exerciseList;
+    private ArrayList<Exercise> filteredFavoritesList;
     private OnFavoriteClickListener favoriteClickListener;
     private boolean isFavoriteList;
 
@@ -29,6 +27,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
         this.exerciseList = exerciseList;
         this.favoriteClickListener = favoriteClickListener;
         this.isFavoriteList = isFavoriteList;
+        this.filteredFavoritesList = new ArrayList<>(exerciseList);
     }
 
     public static class ExerciseViewHolder extends RecyclerView.ViewHolder {
@@ -64,11 +63,13 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
 
     @Override
     public void onBindViewHolder(@NonNull ExerciseAdapter.ExerciseViewHolder holder, int position) {
-        Exercise exercise = exerciseList.get(position);
+        // Ensure you're working with the filtered list
+        Exercise exercise = filteredFavoritesList.get(position);
+
         holder.exerciseName.setText(exercise.getName());
-        holder.exerciseTarget.setText("Target: " + exercise.getTarget());
-        holder.exerciseEquipment.setText("Equipment: " + exercise.getEquipment());
-        holder.exerciseBodyPart.setText("Body Part: " + exercise.getBodyPart());
+        holder.exerciseTarget.setText(exercise.getTarget());
+        holder.exerciseEquipment.setText(exercise.getEquipment());
+        holder.exerciseBodyPart.setText(exercise.getBodyPart());
 
         // Load the exercise gif using Glide
         Glide.with(holder.itemView.getContext())
@@ -92,8 +93,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
                     favoriteClickListener.onFavoriteClick(exercise, holder.exerciseFavoriteBtn);
                 }
             });
-        }
-        else {
+        } else {
             // For favorites list, the heart is filled and clicking removes from the database
             holder.exerciseFavoriteBtn.setImageResource(R.drawable.heart_minus_24px); // Filled heart
             holder.exerciseFavoriteBtn.setOnClickListener(v -> {
@@ -101,19 +101,34 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
                 if (favoriteClickListener != null) {
                     favoriteClickListener.onFavoriteClick(exercise, holder.exerciseFavoriteBtn);
                 }
-                // Remove the exercise from the list and update the adapter
-                exerciseList.remove(position);
-                notifyItemRemoved(position);
+                // Remove the exercise from filteredFavoritesList
+                filteredFavoritesList.remove(position);
+                notifyItemRemoved(position);  // Update the adapter to reflect the change
             });
         }
     }
 
     @Override
     public int getItemCount() {
-        return exerciseList.size();
+        return filteredFavoritesList.size();  // Use filteredFavoritesList here
     }
 
     public interface OnFavoriteClickListener {
         void onFavoriteClick(Exercise exercise, ImageView favoriteBtn);
+    }
+
+    public void filter(String query) {
+        filteredFavoritesList.clear();
+
+        if (query.isEmpty()) {
+            filteredFavoritesList.addAll(exerciseList);
+        } else {
+            for (Exercise item : exerciseList) {
+                if (item.getName().toLowerCase().contains(query.toLowerCase())) {
+                    filteredFavoritesList.add(item);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }

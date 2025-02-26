@@ -4,17 +4,20 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".fragments.ExploreFragment"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/light_beige">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_name_title"
-        android:text=""
+        android:text="Explore Exercises"
+        android:fontFamily="@font/ausa"
+        android:textColor="@color/soft_gray"
         android:padding="10dp"
+        android:textSize="44sp"
+        android:textStyle="bold"
         android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="italic"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -26,16 +29,5 @@
         app:layout_constraintTop_toBottomOf="@id/user_name_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/add_btn"
         tools:listitem="@layout/card_row"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/baseline_add_24"
-        android:layout_margin="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/add_btn" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

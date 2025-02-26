@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="Terracotta_red">#B85042</color>
+    <color name="light_beige">#E7E8D1</color>
+    <color name="muted_teal">#A7BEAE</color>
+    <color name="azure">#f0ffff</color>
+    <color name="soft_gray">#666666</color>
 </resources>
