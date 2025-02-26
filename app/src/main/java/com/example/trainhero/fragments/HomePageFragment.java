@@ -8,7 +8,6 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.example.trainhero.R;
 import com.google.android.material.card.MaterialCardView;
@@ -32,7 +31,7 @@ public class HomePageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view =  inflater.inflate(R.layout.fragment_home_page, container, false);
+        View view =  inflater.inflate(R.layout.fragment_explore, container, false);
 
         MaterialCardView exploreCard = view.findViewById(R.id.exploreCard);
         exploreCard.setOnClickListener(v -> {

@@ -85,13 +85,17 @@ public class DataServices {
 
     public ArrayList<Exercise> getAllExercises() {
         ArrayList<Exercise> exerciseList = new ArrayList<>();
-        String urlString = "https://api.exercisedb.io/exercises";
+        String urlString = "https://exercisedb.p.rapidapi.com/exercises?limit=0";
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         try {
             URL url = new URL(urlString);
             HttpURLConnection request = (HttpURLConnection) url.openConnection();
+
+            // Setting headers as in getExerciseById
+            request.setRequestProperty("X-RapidAPI-Key", "4eb84240edmsh338a895e3922f48p1f11a2jsn54678358de5a");
+            request.setRequestProperty("X-RapidAPI-Host", "exercisedb.p.rapidapi.com");
             request.connect();
 
             JsonParser jp = new JsonParser();
@@ -128,7 +132,7 @@ public class DataServices {
                 }
 
                 // Create Exercise object and add it to the list
-                Exercise exercise = new Exercise(id, name, target, bodyPart, equipment, gifUrl, secondaryMuscles, instructions);
+                Exercise exercise = new Exercise(id, name, bodyPart, equipment, gifUrl, target, secondaryMuscles, instructions);
                 exerciseList.add(exercise);
             }
 
@@ -138,6 +142,4 @@ public class DataServices {
 
         return exerciseList;
     }
-
-
 }

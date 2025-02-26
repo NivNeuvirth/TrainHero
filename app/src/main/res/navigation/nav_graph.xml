@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentAfterLogin"
-        android:name="com.example.trainhero.fragments.FragmentAfterLogin"
+        android:name="com.example.trainhero.fragments.ExploreFragment"
         android:label="fragment_after_login"
         tools:layout="@layout/fragment_after_login" >
         <action
@@ -43,7 +43,7 @@
         android:id="@+id/homePageFragment"
         android:name="com.example.trainhero.fragments.HomePageFragment"
         android:label="fragment_home_page"
-        tools:layout="@layout/fragment_home_page" >
+        tools:layout="@layout/fragment_explore" >
         <action
             android:id="@+id/action_homePageFragment_to_fragmentAfterLogin"
             app:destination="@id/fragmentAfterLogin" />

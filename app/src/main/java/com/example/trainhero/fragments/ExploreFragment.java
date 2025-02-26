@@ -23,23 +23,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentAfterLogin#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class FragmentAfterLogin extends Fragment implements ExerciseAdapter.OnFavoriteClickListener   {
+public class ExploreFragment extends Fragment implements ExerciseAdapter.OnFavoriteClickListener   {
 
     private RecyclerView recyclerView;
     private ExerciseAdapter exerciseAdapter;
     private ArrayList<Exercise> exerciseList;
 
-    public FragmentAfterLogin() {
+    public ExploreFragment() {
         // Required empty public constructor
     }
-    public static FragmentAfterLogin newInstance(String param1, String param2) {
-        FragmentAfterLogin fragment = new FragmentAfterLogin();
+    public static ExploreFragment newInstance(String param1, String param2) {
+        ExploreFragment fragment = new ExploreFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -61,22 +58,11 @@ public class FragmentAfterLogin extends Fragment implements ExerciseAdapter.OnFa
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Fetch exercises
-        fetchSingleExercise();
+        //fetchSingleExercise();
+        fetchRandomExercises();
 
         return view;
     }
-
-//    private void fetchExercises() {
-//        DataServices dataServices = new DataServices();
-//        exerciseList = dataServices.getAllExercises(); // or use getExerciseById() for a single exercise
-//
-//        if (exerciseList != null && !exerciseList.isEmpty()) {
-//            exerciseAdapter = new ExerciseAdapter(exerciseList, this);
-//            recyclerView.setAdapter(exerciseAdapter);
-//        } else {
-//            Toast.makeText(getContext(), "No exercises found", Toast.LENGTH_SHORT).show();
-//        }
-//    }
 
     private void fetchSingleExercise() {
         DataServices dataServices = new DataServices();
@@ -114,6 +100,46 @@ public class FragmentAfterLogin extends Fragment implements ExerciseAdapter.OnFa
             Toast.makeText(getContext(), "Exercise not found", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void fetchRandomExercises() {
+        DataServices dataServices = new DataServices();
+        ArrayList<Exercise> exerciseList = dataServices.getAllExercises();
+
+        if (exerciseList != null && !exerciseList.isEmpty()) {
+            // Shuffle the list to randomize the exercises
+            Collections.shuffle(exerciseList);
+
+            // Select a subset of random exercises (e.g., 5 random exercises)
+            List<Exercise> randomExercises = exerciseList.subList(0, Math.min(5, exerciseList.size()));
+
+            // Check if the exercise is already a favorite for each of the selected random exercises
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference favoritesRef = database.getReference("favorites");
+
+            for (Exercise exercise : randomExercises) {
+                favoritesRef.child(exercise.getId()).get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (task.getResult().exists()) {
+                            // Exercise is a favorite, set filled heart
+                            exercise.setFavorite(true);
+                        } else {
+                            // Exercise is not a favorite, set empty heart
+                            exercise.setFavorite(false);
+                        }
+
+                        // Now set the adapter with updated favorite state
+                        exerciseAdapter = new ExerciseAdapter(new ArrayList<>(randomExercises), this, false);
+                        recyclerView.setAdapter(exerciseAdapter);
+                    } else {
+                        Toast.makeText(getContext(), "Failed to check favorites", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        } else {
+            Toast.makeText(getContext(), "No exercises found", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     @Override
     public void onFavoriteClick(Exercise exercise, ImageView favoriteBtn) {
