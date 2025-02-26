@@ -3,6 +3,8 @@ package com.example.trainhero.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -82,6 +84,7 @@ public class FavoritesFragment extends Fragment {
                         favoriteExercises.add(exercise);
                     }
                 }
+                
                 favoriteAdapter = new ExerciseAdapter(favoriteExercises, this::onFavoriteClick, true);
                 recyclerView.setAdapter(favoriteAdapter);
             }

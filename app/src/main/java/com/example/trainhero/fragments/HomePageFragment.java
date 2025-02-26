@@ -31,7 +31,7 @@ public class HomePageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view =  inflater.inflate(R.layout.fragment_explore, container, false);
+        View view =  inflater.inflate(R.layout.fragment_home_page, container, false);
 
         MaterialCardView exploreCard = view.findViewById(R.id.exploreCard);
         exploreCard.setOnClickListener(v -> {
@@ -46,6 +46,11 @@ public class HomePageFragment extends Fragment {
         MaterialCardView gymsNearByCard = view.findViewById(R.id.nearByCard);
         gymsNearByCard.setOnClickListener(v -> {
             Navigation.findNavController(view).navigate(R.id.action_homePageFragment_to_gymsNearByFragment);
+        });
+
+        MaterialCardView equipmentCard = view.findViewById(R.id.equipmentCard);
+        equipmentCard.setOnClickListener(v -> {
+            Navigation.findNavController(view).navigate(R.id.action_homePageFragment_to_byEquipmentFragment);
         });
 
         return view;

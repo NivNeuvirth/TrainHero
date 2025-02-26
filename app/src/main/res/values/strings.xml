@@ -3,4 +3,35 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">MapsActivity</string>
+
+    <string-array name="equipment_list">
+        <item>assisted</item>
+        <item>band</item>
+        <item>barbell</item>
+        <item>body weight</item>
+        <item>bosu ball</item>
+        <item>cable</item>
+        <item>dumbbell</item>
+        <item>elliptical machine</item>
+        <item>ez barbell</item>
+        <item>hammer</item>
+        <item>kettlebell</item>
+        <item>leverage machine</item>
+        <item>medicine ball</item>
+        <item>olympic barbell</item>
+        <item>resistance band</item>
+        <item>roller</item>
+        <item>rope</item>
+        <item>skierg machine</item>
+        <item>sled machine</item>
+        <item>smith machine</item>
+        <item>stability ball</item>
+        <item>stationary bike</item>
+        <item>stepmill machine</item>
+        <item>tire</item>
+        <item>trap bar</item>
+        <item>upper body ergometer</item>
+        <item>weighted</item>
+        <item>wheel roller</item>
+    </string-array>
 </resources>
