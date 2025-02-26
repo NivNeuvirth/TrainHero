@@ -9,6 +9,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,48 +29,71 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ExploreFragment extends Fragment implements ExerciseAdapter.OnFavoriteClickListener   {
+public class ExploreFragment extends Fragment implements ExerciseAdapter.OnFavoriteClickListener {
 
     private RecyclerView recyclerView;
     private ExerciseAdapter exerciseAdapter;
     private ArrayList<Exercise> exerciseList;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private boolean isDataLoaded = false; // This flag will be used for first-time data loading
 
     public ExploreFragment() {
         // Required empty public constructor
-    }
-    public static ExploreFragment newInstance(String param1, String param2) {
-        ExploreFragment fragment = new ExploreFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Handle restoration of isDataLoaded if needed
+        if (savedInstanceState != null) {
+            isDataLoaded = savedInstanceState.getBoolean("isDataLoaded", false);
+        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_explore, container, false);
-
-        // Initialize RecyclerView
         recyclerView = view.findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
 
-        // Fetch exercises
-        //fetchSingleExercise();
-        fetchRandomExercises();
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            // Shuffle the existing exercise list and update the adapter
+            shuffleAndRefreshExercises();
+        });
 
         return view;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Only fetch data if it's not already loaded
+        if (!isDataLoaded) {
+            fetchRandomExercises();  // Fetch exercises only once
+        } else {
+            // If data is already loaded, just set the adapter with the existing list
+            exerciseAdapter = new ExerciseAdapter(exerciseList, this, false);
+            recyclerView.setAdapter(exerciseAdapter);
+        }
+    }
+
     private void fetchRandomExercises() {
         DataServices dataServices = new DataServices();
-        ArrayList<Exercise> exerciseList = dataServices.getAllExercises();
+        exerciseList = dataServices.getAllExercises();  // Store exercises in class-level variable
+        Toast.makeText(getContext(), "Fetched", Toast.LENGTH_SHORT).show();
 
+        if (exerciseList != null && !exerciseList.isEmpty()) {
+            // Shuffle the list to randomize the exercises
+            shuffleAndRefreshExercises();
+            isDataLoaded = true;  // Mark the data as loaded
+        } else {
+            Toast.makeText(getContext(), "No exercises found", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void shuffleAndRefreshExercises() {
         if (exerciseList != null && !exerciseList.isEmpty()) {
             // Shuffle the list to randomize the exercises
             Collections.shuffle(exerciseList);
@@ -95,16 +119,17 @@ public class ExploreFragment extends Fragment implements ExerciseAdapter.OnFavor
                         // Now set the adapter with updated favorite state
                         exerciseAdapter = new ExerciseAdapter(new ArrayList<>(randomExercises), this, false);
                         recyclerView.setAdapter(exerciseAdapter);
+
+                        // Stop the refreshing animation
+                        swipeRefreshLayout.setRefreshing(false);
                     } else {
                         Toast.makeText(getContext(), "Failed to check favorites", Toast.LENGTH_SHORT).show();
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 });
             }
-        } else {
-            Toast.makeText(getContext(), "No exercises found", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     @Override
     public void onFavoriteClick(Exercise exercise, ImageView favoriteBtn) {
@@ -154,25 +179,9 @@ public class ExploreFragment extends Fragment implements ExerciseAdapter.OnFavor
         });
     }
 
-
-    private void checkIfFavorite(Exercise exercise) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference favoritesRef = database.getReference("favorites").child(exercise.getId());
-
-        favoritesRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                if (task.getResult().exists()) {
-                    // Exercise is in favorites, so set the filled heart
-                    exercise.setFavorite(true); // Assuming you have a 'favorite' field in Exercise model
-                } else {
-                    // Exercise is not in favorites, so set the empty heart
-                    exercise.setFavorite(false); // Assuming you have a 'favorite' field in Exercise model
-                }
-                // Notify adapter that the favorite status has changed (to update heart icon)
-                exerciseAdapter.notifyDataSetChanged();
-            }
-        });
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("isDataLoaded", isDataLoaded); // Save state of dataLoaded flag
     }
-
-
 }

@@ -30,7 +30,7 @@
                 android:text="Gyms NearBy"
                 android:fontFamily="@font/ausa"
                 android:textColor="@color/soft_gray"
-                android:textSize="44sp"
+                android:textSize="32sp"
                 android:textStyle="bold"
                 android:layout_gravity="center" />
         </androidx.appcompat.widget.Toolbar>
