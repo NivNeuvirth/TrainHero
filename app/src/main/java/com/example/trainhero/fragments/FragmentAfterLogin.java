@@ -3,7 +3,7 @@ package com.example.trainhero.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import com.example.trainhero.ExerciseAdapter;
+import com.example.trainhero.adapters.ExerciseAdapter;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.example.trainhero.R;
 import com.example.trainhero.models.Exercise;
 import com.example.trainhero.services.DataServices;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -64,17 +66,17 @@ public class FragmentAfterLogin extends Fragment implements ExerciseAdapter.OnFa
         return view;
     }
 
-    private void fetchExercises() {
-        DataServices dataServices = new DataServices();
-        exerciseList = dataServices.getAllExercises(); // or use getExerciseById() for a single exercise
-
-        if (exerciseList != null && !exerciseList.isEmpty()) {
-            exerciseAdapter = new ExerciseAdapter(exerciseList, this);
-            recyclerView.setAdapter(exerciseAdapter);
-        } else {
-            Toast.makeText(getContext(), "No exercises found", Toast.LENGTH_SHORT).show();
-        }
-    }
+//    private void fetchExercises() {
+//        DataServices dataServices = new DataServices();
+//        exerciseList = dataServices.getAllExercises(); // or use getExerciseById() for a single exercise
+//
+//        if (exerciseList != null && !exerciseList.isEmpty()) {
+//            exerciseAdapter = new ExerciseAdapter(exerciseList, this);
+//            recyclerView.setAdapter(exerciseAdapter);
+//        } else {
+//            Toast.makeText(getContext(), "No exercises found", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     private void fetchSingleExercise() {
         DataServices dataServices = new DataServices();
@@ -99,14 +101,14 @@ public class FragmentAfterLogin extends Fragment implements ExerciseAdapter.OnFa
                     }
 
                     // Now set the adapter with updated favorite state
-                    exerciseAdapter = new ExerciseAdapter(singleExerciseList, this);
+                    exerciseAdapter = new ExerciseAdapter(singleExerciseList, this, false);
                     recyclerView.setAdapter(exerciseAdapter);
                 } else {
                     Toast.makeText(getContext(), "Failed to check favorites", Toast.LENGTH_SHORT).show();
                 }
             });
 
-            exerciseAdapter = new ExerciseAdapter(singleExerciseList, this);
+            exerciseAdapter = new ExerciseAdapter(singleExerciseList, this, false);
             recyclerView.setAdapter(exerciseAdapter);
         } else {
             Toast.makeText(getContext(), "Exercise not found", Toast.LENGTH_SHORT).show();
@@ -119,39 +121,48 @@ public class FragmentAfterLogin extends Fragment implements ExerciseAdapter.OnFa
     }
 
     private void addExerciseToFavorites(Exercise exercise, ImageView favoriteBtn) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference favoritesRef = database.getReference("favorites");
+        DatabaseReference usersRef = database.getReference("users");
 
-        // Use exercise ID (or another unique identifier) for Firebase
-        String exerciseId = exercise.getId(); // Make sure your Exercise model has an `id` field
+        FirebaseUser user = auth.getCurrentUser();
+        if (user == null) {
+            Toast.makeText(getContext(), "User not authenticated", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        // Check if it's already in the favorites by checking the reference in Firebase
-        favoritesRef.child(exerciseId).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                if (task.getResult().exists()) {
-                    // Exercise already exists in favorites, so remove it
-                    favoritesRef.child(exerciseId).removeValue()
-                            .addOnSuccessListener(aVoid -> {
-                                favoriteBtn.setImageResource(R.drawable.heart_plus_24px); // Set empty heart
-                                Toast.makeText(getContext(), "Exercise removed from favorites", Toast.LENGTH_SHORT).show();
-                            })
-                            .addOnFailureListener(e -> {
-                                Toast.makeText(getContext(), "Failed to remove exercise: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            });
-                } else {
-                    // Exercise is not in favorites, so add it
-                    favoritesRef.child(exerciseId).setValue(exercise)
-                            .addOnSuccessListener(aVoid -> {
-                                favoriteBtn.setImageResource(R.drawable.heart_minus_24px); // Set filled heart
-                                Toast.makeText(getContext(), "Exercise added to favorites", Toast.LENGTH_SHORT).show();
-                            })
-                            .addOnFailureListener(e -> {
-                                Toast.makeText(getContext(), "Failed to add exercise: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            });
-                }
+        String userId = user.getUid(); // Get current user's ID
+        String exerciseId = exercise.getId(); // Ensure Exercise model has `id`
+
+        // Reference to user's favorites
+        DatabaseReference userFavoritesRef = usersRef.child(userId).child("favorites").child(exerciseId);
+
+        // Check if exercise exists in user's favorites
+        userFavoritesRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult().exists()) {
+                // Exercise exists, remove it
+                userFavoritesRef.removeValue()
+                        .addOnSuccessListener(aVoid -> {
+                            favoriteBtn.setImageResource(R.drawable.heart_plus_24px); // Empty heart
+                            Toast.makeText(getContext(), "Removed from favorites", Toast.LENGTH_SHORT).show();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(getContext(), "Failed to remove: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
+            } else {
+                // Exercise doesn't exist, add it
+                userFavoritesRef.setValue(exercise)
+                        .addOnSuccessListener(aVoid -> {
+                            favoriteBtn.setImageResource(R.drawable.heart_minus_24px); // Filled heart
+                            Toast.makeText(getContext(), "Added to favorites", Toast.LENGTH_SHORT).show();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(getContext(), "Failed to add: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
             }
         });
     }
+
 
     private void checkIfFavorite(Exercise exercise) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();

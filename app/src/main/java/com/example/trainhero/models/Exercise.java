@@ -26,6 +26,10 @@ public class Exercise implements Serializable {
         this.instructions = instructions;
     }
 
+    // Empty constructor required for Firebase
+    public Exercise() {
+    }
+
     public String getId() {
         return id;
     }
