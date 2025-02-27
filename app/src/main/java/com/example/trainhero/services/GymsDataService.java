@@ -1,6 +1,8 @@
 package com.example.trainhero.services;
 
 import android.os.StrictMode;
+
+import com.example.trainhero.Constants;
 import com.example.trainhero.models.Gym;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -20,7 +22,7 @@ public class GymsDataService {
 
     public List<Gym> getNearbyGyms(double latitude, double longitude) {
         URL url;
-        String sUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + latitude + "," + longitude + "&radius=5000&type=gym&key=AIzaSyBSvvbk6o6RpH6cQBe6wPei-U8yCGQymfA";
+        String sUrl = Constants.GOOGLE_MAPS_NEARBY_BASE_URL + latitude + "," + longitude + "&radius=5000&type=gym&key=" + Constants.GOOGLE_API_KEY;
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);

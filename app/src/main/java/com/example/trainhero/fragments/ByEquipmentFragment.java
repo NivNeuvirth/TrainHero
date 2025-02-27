@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.trainhero.R;
 import com.example.trainhero.adapters.ExerciseAdapter;
 import com.example.trainhero.models.Exercise;
-import com.example.trainhero.services.DataServices;
+import com.example.trainhero.services.ExercisesDataServices;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -58,8 +58,8 @@ public class ByEquipmentFragment extends Fragment implements ExerciseAdapter.OnF
     }
 
     private void fetchExercisesByEquipment(String equipment) {
-        DataServices dataServices = new DataServices();
-        ArrayList<Exercise> exerciseList = dataServices.getExercisesByEquipment(equipment);
+        ExercisesDataServices exercisesDataServices = new ExercisesDataServices();
+        ArrayList<Exercise> exerciseList = exercisesDataServices.getExercisesByEquipment(equipment);
 
         if (exerciseList != null && !exerciseList.isEmpty()) {
             exerciseAdapter = new ExerciseAdapter(exerciseList, this, false);

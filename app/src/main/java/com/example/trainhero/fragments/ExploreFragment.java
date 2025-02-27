@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import com.example.trainhero.R;
 import com.example.trainhero.models.Exercise;
-import com.example.trainhero.services.DataServices;
+import com.example.trainhero.services.ExercisesDataServices;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -67,8 +67,8 @@ public class ExploreFragment extends Fragment implements ExerciseAdapter.OnFavor
     }
 
     private void fetchRandomExercises() {
-        DataServices dataServices = new DataServices();
-        exerciseList = dataServices.getAllExercises();
+        ExercisesDataServices exercisesDataServices = new ExercisesDataServices();
+        exerciseList = exercisesDataServices.getAllExercises();
         Toast.makeText(getContext(), "Exercises Fetched Successfully", Toast.LENGTH_SHORT).show();
 
         if (exerciseList != null && !exerciseList.isEmpty()) {
