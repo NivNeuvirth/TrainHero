@@ -93,8 +93,11 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
                 if (favoriteClickListener != null) {
                     favoriteClickListener.onFavoriteClick(exercise, holder.exerciseFavoriteBtn);
                 }
-                filteredFavoritesList.remove(position);
-                notifyItemRemoved(position);
+                if (position < filteredFavoritesList.size()) {
+                    filteredFavoritesList.remove(position);
+                    exerciseList.remove(exercise); // Remove from original list as well
+                    notifyItemRemoved(position);
+                }
             });
         }
     }
