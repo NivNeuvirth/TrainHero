@@ -77,12 +77,58 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    public void register() {
+    public boolean register() {
+        EditText emailEditText = findViewById(R.id.email_register);
+        EditText passwordEditText = findViewById(R.id.password_register);
+        EditText phoneEditText = findViewById(R.id.phone_register);
+        EditText nameEditText = findViewById(R.id.name_register);
 
-        String email = ((EditText) findViewById(R.id.email_register)).getText().toString();
-        String password = ((EditText) findViewById(R.id.password_register)).getText().toString();
-        String phone = ((EditText) findViewById(R.id.phone_register)).getText().toString();
-        String name = ((EditText) findViewById(R.id.name_register)).getText().toString();
+        String email = emailEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString().trim();
+        String phone = phoneEditText.getText().toString().trim();
+        String name = nameEditText.getText().toString().trim();
+
+        if (name.isEmpty()) {
+            nameEditText.setError("Name is required");
+            showToast("Name is required");
+            return false;
+        }
+
+        if (email.isEmpty()) {
+            emailEditText.setError("Email is required");
+            showToast("Email is required");
+            return false;
+        }
+
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailEditText.setError("Enter a valid email");
+            showToast("Enter a valid email");
+            return false;
+        }
+
+        if (password.isEmpty()) {
+            passwordEditText.setError("Password is required");
+            showToast("Password is required");
+            return false;
+        }
+
+        if (password.length() < 6) {
+            passwordEditText.setError("Password must be at least 6 characters");
+            showToast("Password must be at least 6 characters");
+            return false;
+        }
+
+        if (phone.isEmpty()) {
+            phoneEditText.setError("Phone number is required");
+            showToast("Phone number is required");
+            return false;
+        }
+
+        if (!phone.matches("\\d{10}")) {
+            phoneEditText.setError("Enter a valid phone number");
+            showToast("Enter a valid phone number");
+            return false;
+        }
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -91,15 +137,20 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             String uid = mAuth.getCurrentUser().getUid();
                             addData(uid, email, phone, name);
-                            Toast.makeText(MainActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
-
+                            showToast("Registration Successful");
                         } else {
-                            Toast.makeText(MainActivity.this, "Registration FAILED", Toast.LENGTH_LONG).show();
-
+                            showToast("Registration FAILED");
                         }
                     }
                 });
+
+        return true;
     }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
 
     public void addData(String uid, String email, String phone, String name) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();

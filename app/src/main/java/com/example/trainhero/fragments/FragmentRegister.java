@@ -30,10 +30,10 @@ public class FragmentRegister extends Fragment {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_fragmentRegister_to_fragmentLogin);
-
                 MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.register();
+                if (mainActivity != null && mainActivity.register()) {
+                    Navigation.findNavController(view).navigate(R.id.action_fragmentRegister_to_fragmentLogin);
+                }
             }
         });
 
