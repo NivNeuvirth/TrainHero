@@ -9,7 +9,7 @@
     tools:ignore="ScrollViewCount"
     tools:context=".fragments.HomePageFragment"
     android:fitsSystemWindows="true"
-    android:background="@color/light_beige">
+    android:background="@drawable/home_background">
 
     <LinearLayout
         android:layout_width="match_parent"
