@@ -24,6 +24,7 @@
             android:id="@+id/exe_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:contentDescription="@string/exercise_gif"
             android:scaleType="centerCrop" />
     </androidx.cardview.widget.CardView>
 
@@ -46,7 +47,7 @@
                 android:id="@+id/exe_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="title"
+                android:text="@string/title"
                 android:textSize="24sp"
                 android:fontFamily="@font/ausa"
                 android:textStyle="bold"
@@ -59,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:fontFamily="@font/montserrat"
-                android:text="body part"
+                android:text="@string/body_part"
                 android:drawablePadding="5dp" />
 
             <TextView
@@ -67,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="equipment"
+                android:text="@string/equipment"
                 android:fontFamily="@font/montserrat"
                 android:drawablePadding="5dp" />
 
@@ -76,7 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="target"
+                android:text="@string/muscle_target"
                 android:drawablePadding="5dp"
                 android:fontFamily="@font/montserrat"/>
 
@@ -85,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="secondary muscles group"
+                android:text="@string/secondary_muscles_group"
                 android:drawablePadding="5dp"
                 android:fontFamily="@font/montserrat"/>
 
@@ -94,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingVertical="10dp"
-                android:text="Instructions"
+                android:text="@string/instructions"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/montserrat"/>
@@ -103,7 +104,7 @@
                 android:id="@+id/exe_instructions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="instructions"
+                android:text="@string/instructions"
                 android:textSize="16sp"
                 android:fontFamily="@font/montserrat"/>
         </LinearLayout>

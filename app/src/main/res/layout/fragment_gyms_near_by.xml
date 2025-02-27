@@ -27,7 +27,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gyms NearBy"
+                android:text="@string/gyms_nearby"
                 android:fontFamily="@font/ausa"
                 android:textColor="@color/soft_gray"
                 android:textSize="32sp"
@@ -54,5 +54,4 @@
             android:clipToPadding="false"
             android:clipChildren="false" />
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

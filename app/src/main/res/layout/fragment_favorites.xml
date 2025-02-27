@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/fav_title"
-        android:text="Favorites"
+        android:text="@string/favorites"
         android:fontFamily="@font/ausa"
         android:textColor="@color/soft_gray"
         android:layout_marginTop="10dp"

@@ -7,4 +7,5 @@
     <color name="muted_teal">#A7BEAE</color>
     <color name="azure">#f0ffff</color>
     <color name="soft_gray">#666666</color>
+    <color name="dark_gray">#636363</color>
 </resources>

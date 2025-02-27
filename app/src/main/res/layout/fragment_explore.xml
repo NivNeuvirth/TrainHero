@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_name_title"
-        android:text="Explore Exercises"
+        android:text="@string/explore_exercises"
         android:fontFamily="@font/ausa"
         android:textColor="@color/soft_gray"
         android:padding="10dp"

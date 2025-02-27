@@ -3,6 +3,42 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="muscle_target">Muscle target:</string>
+    <string name="name">Name</string>
+    <string name="body_part">Body Part:</string>
+    <string name="equipment">Equipment:</string>
+    <string name="favorite">Favorite</string>
+    <string name="get_exercises_by_equipment">Get Exercises By Equipment</string>
+    <string name="select_equipment">select equipment</string>
+    <string name="exercise_gif">Exerise_GIF</string>
+    <string name="title">title</string>
+    <string name="secondary_muscles_group">Secondary muscles group</string>
+    <string name="instructions">Instructions</string>
+    <string name="explore_exercises">Explore Exercises</string>
+    <string name="favorites">Favorites</string>
+    <string name="gyms_nearby">Gyms NearBy</string>
+    <string name="hello_user">Hello, User!</string>
+    <string name="logo">logo</string>
+    <string name="explore_icon">explore icon</string>
+    <string name="explore_exercises_txt">Explore Exercises</string>
+    <string name="fav_icon">fav icon</string>
+    <string name="favorite_exercises">Favorite Exercises</string>
+    <string name="nearby_icon">nearby icon</string>
+    <string name="gyms_nearby_txt">Gyms Nearby</string>
+    <string name="dumbbell_icon">dumbbell icon</string>
+    <string name="get_exercises_by_equipment_txt">Get Exercises By Equipment</string>
+    <string name="please_login_or_register_to_continue">Please Login Or Register to Continue</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="login">Login</string>
+    <string name="don_t_have_an_accout_click_to_register">Don\'t have an accout? click to Register</string>
+    <string name="join_trainhero">Join TrainHero</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="enter_email_txt">Enter Email</string>
+    <string name="enter_password_txt">Enter Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="enter_phone_number">Enter Phone Number</string>
+    <string name="register">Register</string>
 
     <string-array name="equipment_list">
         <item>assisted</item>

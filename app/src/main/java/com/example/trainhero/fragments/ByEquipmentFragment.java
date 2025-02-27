@@ -26,7 +26,6 @@ public class ByEquipmentFragment extends Fragment implements ExerciseAdapter.OnF
 
     private RecyclerView recyclerView;
     private ExerciseAdapter exerciseAdapter;
-    private ArrayList<Exercise> equipmentExercisesList;
     private String selectedEquipment;
 
     public ByEquipmentFragment() {}
