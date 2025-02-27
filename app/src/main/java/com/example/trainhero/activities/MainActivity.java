@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
-        // Validation
         if (email.isEmpty()) {
             emailEditText.setError("Email cannot be empty");
             emailEditText.requestFocus();
@@ -67,12 +66,11 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(MainActivity.this, "login OK", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                             Navigation.findNavController(view).navigate(R.id.action_fragmentLogin_to_homePageFragment);
 
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(MainActivity.this, "login FAILED", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, "Login FAILED", Toast.LENGTH_LONG).show();
 
                         }
                     }
@@ -91,14 +89,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             String uid = mAuth.getCurrentUser().getUid();
                             addData(uid, email, phone, name);
-                            Toast.makeText(MainActivity.this, "Registration OK", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
 
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(MainActivity.this, "Registration Failed", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, "Registration FAILED", Toast.LENGTH_LONG).show();
 
                         }
                     }

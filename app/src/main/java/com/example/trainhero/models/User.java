@@ -10,7 +10,6 @@ public class User {
     private String email;
     private String name;
 
-
     public User() {}
 
     public User(String phone, String email, String name) {

@@ -45,14 +45,12 @@ public class GymsDataService {
 
             JsonArray results = obj.getAsJsonArray("results");
 
-            // Parsing the nearby gyms
             for (JsonElement result : results) {
                 JsonObject gym = result.getAsJsonObject();
                 String name = gym.get("name").getAsString();
                 double lat = gym.getAsJsonObject("geometry").getAsJsonObject("location").get("lat").getAsDouble();
                 double lng = gym.getAsJsonObject("geometry").getAsJsonObject("location").get("lng").getAsDouble();
 
-                // Create a Gym object and add it to the list
                 gyms.add(new Gym(name, lat, lng));
             }
 

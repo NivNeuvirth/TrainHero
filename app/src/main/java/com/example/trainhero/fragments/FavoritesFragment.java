@@ -1,19 +1,15 @@
 package com.example.trainhero.fragments;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
-
 import com.example.trainhero.R;
 import com.example.trainhero.adapters.ExerciseAdapter;
 import com.example.trainhero.models.Exercise;
@@ -22,31 +18,22 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class FavoritesFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ExerciseAdapter favoriteAdapter;
     private ArrayList<Exercise> favoriteExercises = new ArrayList<>();
-    private ArrayList<Exercise> filteredExercises = new ArrayList<>();
     private DatabaseReference userFavoritesRef;
     private FirebaseAuth auth;
     private SearchView searchView;
 
-    public FavoritesFragment() {
-        // Required empty public constructor
-    }
-    public static FavoritesFragment newInstance() {
-        return new FavoritesFragment();
-    }
+    public FavoritesFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -57,7 +44,6 @@ public class FavoritesFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerViewFavorites);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
 
         favoriteAdapter = new ExerciseAdapter(favoriteExercises, null, true);
         recyclerView.setAdapter(favoriteAdapter);
@@ -92,7 +78,6 @@ public class FavoritesFragment extends Fragment {
     }
 
     private void fetchFavorites() {
-        // Fetch favorite exercises from the database for the current user
         userFavoritesRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 favoriteExercises.clear();
@@ -111,10 +96,8 @@ public class FavoritesFragment extends Fragment {
     }
 
     private void onFavoriteClick(Exercise exercise, ImageView favoriteBtn) {
-        // Remove the exercise from the user's favorites in Firebase
         userFavoritesRef.child(exercise.getId()).removeValue()
                 .addOnSuccessListener(aVoid -> {
-                    // Exercise removed from favorites successfully
                     Toast.makeText(getContext(), "Exercise removed from favorites", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {

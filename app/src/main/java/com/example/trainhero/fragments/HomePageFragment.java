@@ -22,15 +22,7 @@ import java.util.Calendar;
 
 public class HomePageFragment extends Fragment {
 
-    private FirebaseAuth auth;
-
-    public HomePageFragment() {
-        // Required empty public constructor
-    }
-
-    public static HomePageFragment newInstance(String param1, String param2) {
-        return new HomePageFragment();
-    }
+    public HomePageFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,22 +36,19 @@ public class HomePageFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
 
-        // Get the current user from Firebase
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String userId = user.getUid();
             DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
-            // Fetch the name from Firebase Realtime Database
             database.child("users").child(userId).child("name").get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             String userName = task.getResult().getValue(String.class);
                             if (userName == null || userName.isEmpty()) {
-                                userName = "User";  // Default if name is not found
+                                userName = "User";
                             }
 
-                            // Get the current hour for greeting
                             int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
                             String timeOfDayGreeting;
 
@@ -71,7 +60,6 @@ public class HomePageFragment extends Fragment {
                                 timeOfDayGreeting = "Good Night";
                             }
 
-                            // Set the greeting message
                             TextView greetingTextView = view.findViewById(R.id.greetingTextView);
                             greetingTextView.setText(timeOfDayGreeting + ", " + userName + "!");
                         }

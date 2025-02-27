@@ -63,27 +63,21 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
 
     @Override
     public void onBindViewHolder(@NonNull ExerciseAdapter.ExerciseViewHolder holder, int position) {
-        // Ensure you're working with the filtered list
-        Exercise exercise = filteredFavoritesList.get(position);
 
+        Exercise exercise = filteredFavoritesList.get(position);
         holder.exerciseName.setText(exercise.getName());
         holder.exerciseTarget.setText(exercise.getTarget());
         holder.exerciseEquipment.setText(exercise.getEquipment());
         holder.exerciseBodyPart.setText(exercise.getBodyPart());
-
-        // Load the exercise gif using Glide
         Glide.with(holder.itemView.getContext())
                 .load(exercise.getGifUrl())
                 .into(holder.exerciseGif);
-
-        // Navigate to exercise details
         holder.itemView.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putSerializable("exercise", exercise);
             Navigation.findNavController(v).navigate(R.id.action_global_detailedExerciseFragment, bundle);
         });
 
-        // If it's a favorite list, we don't need to change favorite state
         if (!isFavoriteList) {
             holder.exerciseFavoriteBtn.setImageResource(exercise.isFavorite() ? R.drawable.heart_minus_24px : R.drawable.heart_plus_24px);
             holder.exerciseFavoriteBtn.setOnClickListener(v -> {
@@ -94,23 +88,20 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
                 }
             });
         } else {
-            // For favorites list, the heart is filled and clicking removes from the database
-            holder.exerciseFavoriteBtn.setImageResource(R.drawable.heart_minus_24px); // Filled heart
+            holder.exerciseFavoriteBtn.setImageResource(R.drawable.heart_minus_24px);
             holder.exerciseFavoriteBtn.setOnClickListener(v -> {
-                // Remove from Firebase and the UI
                 if (favoriteClickListener != null) {
                     favoriteClickListener.onFavoriteClick(exercise, holder.exerciseFavoriteBtn);
                 }
-                // Remove the exercise from filteredFavoritesList
                 filteredFavoritesList.remove(position);
-                notifyItemRemoved(position);  // Update the adapter to reflect the change
+                notifyItemRemoved(position);
             });
         }
     }
 
     @Override
     public int getItemCount() {
-        return filteredFavoritesList.size();  // Use filteredFavoritesList here
+        return filteredFavoritesList.size();
     }
 
     public interface OnFavoriteClickListener {

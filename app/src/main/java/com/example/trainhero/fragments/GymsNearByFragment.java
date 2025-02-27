@@ -2,19 +2,14 @@ package com.example.trainhero.fragments;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-
 import com.example.trainhero.R;
 import com.example.trainhero.models.Gym;
 import com.example.trainhero.services.GymsDataService;
@@ -38,10 +33,9 @@ public class GymsNearByFragment extends Fragment implements OnMapReadyCallback {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Inflate the layout for the fragment
+
         View view = inflater.inflate(R.layout.fragment_gyms_near_by, container, false);
 
-        // Initialize MapView
         mapView = view.findViewById(R.id.map);
         if (mapView != null) {
             mapView.onCreate(savedInstanceState);
@@ -54,7 +48,6 @@ public class GymsNearByFragment extends Fragment implements OnMapReadyCallback {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Initialize location services
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
     }
 
@@ -79,7 +72,6 @@ public class GymsNearByFragment extends Fragment implements OnMapReadyCallback {
                 LatLng myLocation = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
 
-                // Fetch nearby gyms
                 fetchNearbyGyms(myLocation);
             }
         });
