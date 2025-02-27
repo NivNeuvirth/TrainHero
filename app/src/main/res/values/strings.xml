@@ -39,6 +39,12 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="enter_phone_number">Enter Phone Number</string>
     <string name="register">Register</string>
+    <string name="target">"Target: "</string>
+    <string name="equipment_txt">"Equipment: "</string>
+    <string name="body_part_txt">"Body Part: "</string>
+    <string name="secondary_muscle_group_txt">"Secondary Muscle Group: "</string>
+    <string name="secondary_muscles_none">Secondary Muscles: None</string>
+    <string name="instructions_no_instructions_available">Instructions: No instructions available.</string>
 
     <string-array name="equipment_list">
         <item>assisted</item>

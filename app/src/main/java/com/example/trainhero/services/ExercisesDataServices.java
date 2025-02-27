@@ -2,7 +2,7 @@ package com.example.trainhero.services;
 
 import android.os.StrictMode;
 
-import com.example.trainhero.Constants;
+import com.example.trainhero.utils.Constants;
 import com.example.trainhero.models.Exercise;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

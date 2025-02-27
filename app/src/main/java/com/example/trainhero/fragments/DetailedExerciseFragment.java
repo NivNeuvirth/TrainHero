@@ -41,22 +41,22 @@ public class DetailedExerciseFragment extends Fragment {
 
             if (exercise != null) {
                 exerciseName.setText(exercise.getName());
-                exerciseTarget.setText("Target: " + exercise.getTarget());
-                exerciseEquipment.setText("Equipment: " + exercise.getEquipment());
-                exerciseBodyPart.setText("Body Part: " + exercise.getBodyPart());
+                exerciseTarget.setText(getString(R.string.target) + exercise.getTarget());
+                exerciseEquipment.setText(getString(R.string.equipment_txt) + exercise.getEquipment());
+                exerciseBodyPart.setText(getString(R.string.body_part_txt) + exercise.getBodyPart());
 
                 if (exercise.getSecondaryMuscles() != null && !exercise.getSecondaryMuscles().isEmpty()) {
-                    exerciseMuscleGroup.setText("Secondary Muscle Group: " +TextUtils.join(", ", exercise.getSecondaryMuscles()));
+                    exerciseMuscleGroup.setText(getString(R.string.secondary_muscle_group_txt) +TextUtils.join(", ", exercise.getSecondaryMuscles()));
 
                 } else {
-                    exerciseInstructions.setText("Secondary Muscles: None");
+                    exerciseInstructions.setText(R.string.secondary_muscles_none);
                 }
 
                 if (exercise.getInstructions() != null && !exercise.getInstructions().isEmpty()) {
                     exerciseInstructions.setText(TextUtils.join("\n", exercise.getInstructions()));
 
                 } else {
-                    exerciseInstructions.setText("Instructions: No instructions available.");
+                    exerciseInstructions.setText(R.string.instructions_no_instructions_available);
                 }
 
                 Glide.with(getContext())

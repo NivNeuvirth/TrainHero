@@ -1,4 +1,4 @@
-package com.example.trainhero;
+package com.example.trainhero.utils;
 
 public class Constants {
     public static final String EXERCISE_API_KEY = "4eb84240edmsh338a895e3922f48p1f11a2jsn54678358de5a";
